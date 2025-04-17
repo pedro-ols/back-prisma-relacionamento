@@ -3,7 +3,7 @@ import CollectionModel from "../models/collectionModel.js";
 class CollectionController {
   getAll = async (req, res) => {
     try {
-      const colecoes = await CollectionModel.getAll();
+      const colecoes = await CollectionModel.findAll();
       res.json(colecoes);
     } catch (error) {
       console.error("Erro ao buscar as coleções", error);
@@ -15,11 +15,9 @@ class CollectionController {
     try {
       const { name, description, releaseYear } = req.body;
       if (!name || !releaseYear) {
-        return res
-          .status(400)
-          .json({
-            erro: "Os campos de nome e ano de lançamento são obrigatórios",
-          });
+        return res.status(400).json({
+          erro: "Os campos de nome e ano de lançamento são obrigatórios",
+        });
       }
 
       const newCollection = await CollectionModel.create(

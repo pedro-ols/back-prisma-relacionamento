@@ -1,9 +1,12 @@
 import prisma from "../../prisma/client.js";
 
 class CollectionModel {
-  async getAll() {
+  async findAll() {
     const colecoes = await prisma.collection.findMany({
       orderBy: { createdAt: "desc" },
+      include: {
+        cards: true,
+      },
     });
 
     console.log(colecoes);
