@@ -1,7 +1,7 @@
 import prisma from "../../prisma/client.js";
 
 class CollectionModel {
-  async findAll() {
+  async getAll() {
     const colecoes = await prisma.collection.findMany({
       orderBy: { createdAt: "desc" },
     });
@@ -11,17 +11,21 @@ class CollectionModel {
     return colecoes;
   }
 
-  create = async (descricao) => {
-    return await prisma.task.create({
+  create = async (name, description, releaseYear ) => {
+    const newCollection = await prisma.collection.create({
       data: {
-        descricao,
+        name,
+        description,
+        releaseYear,
       },
     });
+
+    return newCollection;
   };
 
   update = async (id, concluida, descricao) => {
     try {
-      const collection = await prisma.task.update({
+      const collection = await prisma.collection.update({
         where: { id },
         data: {
           concluida: concluida !== undefined ? concluida : true,

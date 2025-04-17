@@ -6,24 +6,36 @@ class CollectionController {
       const colecoes = await CollectionModel.getAll();
       res.json(colecoes);
     } catch (error) {
-      console.error("Erro ao buscar as coleções" ,error);
+      console.error("Erro ao buscar as coleções", error);
       res.status(500).json({ error: "Erro ao buscar coleções" });
     }
   };
 
   create = async (req, res) => {
-    const { descricao } = req.body;
-    // const descricao = req.body.descricao;
     try {
-      if (!descricao) {
-        return res.status(400).json({ erro: "Descrição é obrigatória" });
+      const { name, description, releaseYear } = req.body;
+      if (!name || !releaseYear) {
+        return res
+          .status(400)
+          .json({
+            erro: "Os campos de nome e ano de lançamento são obrigatórios",
+          });
       }
 
-      const novacoleection = await tarefaModel.create(descricao);
-      res.status(201).json(novaTarefa);
+      const newCollection = await CollectionModel.create(
+        name,
+        description,
+        releaseYear
+      );
+
+      if (!newCollection) {
+        return res.status(400).json({ erro: "Erro ao criar coleção" });
+      }
+
+      res.status(201).json(newCollection);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ erro: "Erro ao criar tarefa" });
+      res.status(500).json({ erro: "Erro ao criar coleção" });
     }
   };
 
