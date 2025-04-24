@@ -9,10 +9,8 @@ class CardModel {
       },
       include: {
         collection: true,
-      }
+      },
     });
-
-    console.log(cards);
 
     return cards;
   }
@@ -29,65 +27,77 @@ class CardModel {
     });
 
     return card;
+    
   }
 
   // Criar um novo personagem
-  async create(name, description, releaseYear) {
-    const newCollection = await prisma.collection.create({
-      data: {name, description, releaseYear},
+  async create(
+    name,
+    rarity,
+    attackPoints,
+    defensePoints,
+    imageUrl,
+    collectionId
+  ) {
+    const newCard = await prisma.card.create({
+      data: {
+        name,
+        rarity,
+        attackPoints,
+        defensePoints,
+        imageUrl,
+        collectionId,
+      },
     });
 
-    return newCollection;
+    return newCard;
   }
 
-  // Atualizar um personagem
+  // Atualizar uma carta
   async update(
-    id,
     name,
-    description,
-    releaseYear
+    rarity,
+    attackPoints,
+    defensePoints,
+    imageUrl,
+    collectionId,
+    id
   ) {
-    const collection = await this.findById(id);
+    console.log(name, rarity, attackPoints, defensePoints, imageUrl, collectionId, id);
+    const card = await this.findById(id);
 
-    if (!collection) {
+    if (!card) {
       return null;
     }
 
-    // Atualize o personagem existente com os novos dados
-    
-    if (name !== undefined) {
-      name = name;
-    }
-    if (description !== undefined) {
-      description = description;
-    }
-    if (releaseYear !== undefined) {
-      releaseYear = releaseYear;
-    }
+    // Atualize a carta existente com os novos dados
 
-    const updatedCollection = await prisma.collection.update({
+    const updatedCard = await prisma.card.update({
       where: {
         id: Number(id),
       },
       data: {
         name,
-        description,
-        releaseYear
-      }
+        rarity,
+        attackPoints,
+        defensePoints,
+        imageUrl,
+        collectionId: Number(collectionId),
+      },
     });
 
-    return updatedCollection;
+    return updatedCard;
   }
 
-  // Remover uma coleção
+  // Remover uma carta
   async delete(id) {
-    const colecao = await this.findById(id);
+    const card = await this.findById(id);
 
-    if (!colecao) {
+    if (!card) {
       return null;
     }
 
-    await prisma.collection.delete({
+    await prisma.card.delete({
       where: {
         id: Number(id),
       },

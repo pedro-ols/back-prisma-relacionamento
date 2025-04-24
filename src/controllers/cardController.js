@@ -1,7 +1,7 @@
 import CardModel from "../models/cardModel.js";
 
 class CardController {
-  // GET /cards
+  // GET /cartas
   async getAllCards(req, res) {
     try {
       const cards = await CardModel.findAll();
@@ -12,7 +12,7 @@ class CardController {
     }
   }
 
-  // GET /api/colecoes/:id
+  // GET /api/cartas/:id
   async getCardById(req, res) {
     try {
       const { id } = req.params;
@@ -30,79 +30,105 @@ class CardController {
     }
   }
 
-  // POST /api/colecoes
-  async createCollection(req, res) {
+  // POST /api/cartas
+  async createCard(req, res) {
     try {
       // Validação básica
-      const {name, description, releaseYear} = req.body;
+      const {
+        name,
+        rarity,
+        attackPoints,
+        defensePoints,
+        imageUrl,
+        collectionId,
+      } = req.body;
 
-      // Verifica se todos os campos da coleção foram fornecidos
-      if (!name || !releaseYear) {
-        return res
-          .status(400)
-          .json({ error: "Os campos de name e releaseYear são obrigatórios" });
+      // Verifica se todos os campos da carta foram fornecidos
+      if (
+        !name ||
+        !rarity ||
+        !attackPoints ||
+        !defensePoints ||
+        !collectionId
+      ) {
+        return res.status(400).json({
+          error: "Os campos obrigatórios não foram preenchidos devidamente",
+        });
       }
 
-      // Criar a nova coleção
-      const newCollection = await CollectionModel.create(name, description, releaseYear);
+      // Criar a nova carta
+      const newCard = await CardModel.create(
+        name,
+        rarity,
+        attackPoints,
+        defensePoints,
+        imageUrl,
+        collectionId
+      );
 
-      if (!newCollection) {
+      if (!newCard) {
         return res.status(400).json({ error: "Erro ao criar coleção" });
       }
 
-      res.status(201).json(newCollection);
+      res.status(201).json(newCard);
     } catch (error) {
-      console.error("Erro ao criar coleção:", error);
-      res.status(500).json({ error: "Erro ao criar coleção" });
+      console.error("Erro ao criar carta:", error);
+      res.status(500).json({ error: "Erro ao criar carta" });
     }
   }
 
-  // PUT /api/colecoes/:id
-  async updateCollection(req, res) {
+  // PUT /api/cartas/:id
+  async updateCard(req, res) {
     try {
       const { id } = req.params;
       const {
         name,
-        description,
-        releaseYear,
+        rarity,
+        attackPoints,
+        defensePoints,
+        imageUrl,
+        collectionId,
       } = req.body;
 
-      // Atualizar a coleção
-      const updatedCollection = await CollectionModel.update(
-        id,
+      // Atualizar a carta
+      const updatedCard = await CardModel.update(
         name,
-        description,
-        releaseYear,
+        rarity,
+        attackPoints,
+        defensePoints,
+        imageUrl,
+        collectionId,
+        id
       );
 
-      if (!updatedCollection) {
-        return res.status(404).json({ error: "Coleção não encontrada" });
+      if (!updatedCard) {
+        return res.status(404).json({ error: "Carta não encontrada" });
       }
 
-      res.json(updatedCollection);
+      res.json(updatedCard);
     } catch (error) {
-      console.error("Erro ao atualizar coleção:", error);
-      res.status(500).json({ error: "Erro ao atualizar coleção." });
+      console.error("Erro ao atualizar carta:", error);
+      res.status(500).json({ error: "Erro ao atualizar carta." });
     }
   }
 
   // DELETE /api/personagens/:id
-  async deleteCollection(req, res) {
+  async deleteCard(req, res) {
     try {
       const { id } = req.params;
 
-      // Remover a coleção
-      const result = await CollectionModel.delete(id);
+      // Remover a carta
+      const result = await CardModel.delete(id);
 
       if (!result) {
-        return res.status(404).json({ error: "Coleção não encontrada" });
+        return res.status(404).json({ error: "Carta não encontrada" });
       }
-      return res.status(200).json({ message: "Coleção deletada com sucesso."});
+      return res.status(200).json({ message: "Carta deletada com sucesso." });
 
       res.status(204).end(); // Resposta sem conteúdo
     } catch (error) {
-      console.error("Erro ao remover coleção:", error);
-      res.status(500).json({ error: "Erro ao remover coleção" });
+      console.error("Erro ao remover carta:", error);
+      res.status(500).json({ error: "Erro ao remover carta" });
     }
   }
 }

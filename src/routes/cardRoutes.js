@@ -11,12 +11,12 @@ cardRouter.get("/", CardController.getAllCards);
 cardRouter.get("/:id", CardController.getCardById);
 
 // POST /personagens - Criar uma nova coleção
-// cardRouter.post("/", CardController.createcard);
+cardRouter.post("/", CardController.createCard);
 
 // PUT /personagens/:id - Atualizar uma coleção
-// cardRouter.put("/:id", CardController.updatecard);
+cardRouter.put("/:id", CardController.updateCard);
 
 // DELETE /personagens/:id - Remover uma coleção
-// cardRouter.delete("/:id", CardController.deletecard);
+cardRouter.delete("/:id", CardController.deleteCard);
 
 export default cardRouter;
