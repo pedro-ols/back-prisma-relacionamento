@@ -51,22 +51,26 @@ class CollectionModel {
     }
 
     // Atualize o personagem existente com os novos dados
-    const data = {};
+    
     if (name !== undefined) {
-      data.name = name;
+      name = name;
     }
     if (description !== undefined) {
-      data.description = description;
+      description = description;
     }
     if (releaseYear !== undefined) {
-      data.releaseYear = releaseYear;
+      releaseYear = releaseYear;
     }
 
     const updatedCollection = await prisma.collection.update({
       where: {
         id: Number(id),
       },
-      data,
+      data: {
+        name,
+        description,
+        releaseYear
+      }
     });
 
     return updatedCollection;
