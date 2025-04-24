@@ -12,7 +12,7 @@ class CollectionController {
     }
   }
 
-  // GET /api/personagens/:id
+  // GET /api/colecoes/:id
   async getCollectionById(req, res) {
     try {
       const { id } = req.params;
@@ -30,20 +30,20 @@ class CollectionController {
     }
   }
 
-  // POST /api/personagens
+  // POST /api/colecoes
   async createCollection(req, res) {
     try {
       // Validação básica
       const {name, description, releaseYear} = req.body;
 
-      // Verifica se todos os campos do coleção foram fornecidos
+      // Verifica se todos os campos da coleção foram fornecidos
       if (!name || !releaseYear) {
         return res
           .status(400)
           .json({ error: "Os campos de name e releaseYear são obrigatórios" });
       }
 
-      // Criar o novo coleção
+      // Criar a nova coleção
       const newCollection = await CollectionModel.create(name, description, releaseYear);
 
       if (!newCollection) {
@@ -57,7 +57,7 @@ class CollectionController {
     }
   }
 
-  // PUT /api/personagens/:id
+  // PUT /api/colecoes/:id
   async updateCollection(req, res) {
     try {
       const { id } = req.params;
@@ -67,7 +67,7 @@ class CollectionController {
         releaseYear,
       } = req.body;
 
-      // Atualizar o personagem
+      // Atualizar a coleção
       const updatedCollection = await CollectionModel.update(
         id,
         name,
@@ -87,21 +87,22 @@ class CollectionController {
   }
 
   // DELETE /api/personagens/:id
-  async deletePersonagem(req, res) {
+  async deleteCollection(req, res) {
     try {
       const { id } = req.params;
 
-      // Remover o personagem
-      const result = await PersonagemModel.delete(id);
+      // Remover a coleção
+      const result = await CollectionModel.delete(id);
 
       if (!result) {
-        return res.status(404).json({ error: "Personagem não encontrado" });
+        return res.status(404).json({ error: "Coleção não encontrada" });
       }
+      return res.status(200).json({ message: "Coleção deletada com sucesso."});
 
       res.status(204).end(); // Resposta sem conteúdo
     } catch (error) {
-      console.error("Erro ao remover personagem:", error);
-      res.status(500).json({ error: "Erro ao remover personagem" });
+      console.error("Erro ao remover coleção:", error);
+      res.status(500).json({ error: "Erro ao remover coleção" });
     }
   }
 }
