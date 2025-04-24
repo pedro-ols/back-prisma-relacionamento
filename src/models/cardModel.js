@@ -1,20 +1,23 @@
 import prisma from "../../prisma/prisma.js";
 
-class CollectionModel {
-  // Obter todas as coleções
+class CardModel {
+  // Obter todas as cartas
   async findAll() {
-    const colecoes = await prisma.collection.findMany({
+    const cards = await prisma.card.findMany({
       orderBy: {
         createdAt: "desc",
       },
+      include: {
+        collection: true,
+      }
     });
 
-    console.log(colecoes);
+    console.log(cards);
 
-    return colecoes;
+    return cards;
   }
 
-  // Obter uma coleção pelo ID
+  // Obter uma carta pelo ID
   async findById(id) {
     const colecao = await prisma.collection.findUnique({
       where: {
@@ -28,7 +31,7 @@ class CollectionModel {
     return colecao;
   }
 
-  // Criar uma nova coleção
+  // Criar um novo personagem
   async create(name, description, releaseYear) {
     const newCollection = await prisma.collection.create({
       data: {name, description, releaseYear},
@@ -37,7 +40,7 @@ class CollectionModel {
     return newCollection;
   }
 
-  // Atualizar uma coleção
+  // Atualizar um personagem
   async update(
     id,
     name,
@@ -50,7 +53,7 @@ class CollectionModel {
       return null;
     }
 
-    // Atualize a coleção existente com os novos dados
+    // Atualize o personagem existente com os novos dados
     
     if (name !== undefined) {
       name = name;
@@ -94,4 +97,4 @@ class CollectionModel {
   }
 }
 
-export default new CollectionModel();
+export default new CardModel();
