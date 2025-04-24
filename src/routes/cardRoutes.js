@@ -8,7 +8,7 @@ const cardRouter = express.Router();
 cardRouter.get("/", CardController.getAllCards);
 
 // GET /personagens/:id - Obter uma coleções pelo ID
-// cardRouter.get("/:id", CardController.getcardById);
+cardRouter.get("/:id", CardController.getCardById);
 
 // POST /personagens - Criar uma nova coleção
 // cardRouter.post("/", CardController.createcard);

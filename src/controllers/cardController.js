@@ -13,20 +13,20 @@ class CardController {
   }
 
   // GET /api/colecoes/:id
-  async getCollectionById(req, res) {
+  async getCardById(req, res) {
     try {
       const { id } = req.params;
 
-      const colecao = await CollectionModel.findById(id);
+      const card = await CardModel.findById(id);
 
-      if (!colecao) {
-        return res.status(404).json({ error: "Coleção não encontrada." });
+      if (!card) {
+        return res.status(404).json({ error: "Carta não encontrada." });
       }
 
-      res.json(colecao);
+      res.json(card);
     } catch (error) {
-      console.error("Erro ao buscar coleção:", error);
-      res.status(500).json({ error: "Erro ao buscar coleção." });
+      console.error("Erro ao buscar carta:", error);
+      res.status(500).json({ error: "Erro ao buscar carta." });
     }
   }
 
