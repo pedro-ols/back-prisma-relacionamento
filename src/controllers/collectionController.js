@@ -58,41 +58,31 @@ class CollectionController {
   }
 
   // PUT /api/personagens/:id
-  async updatePersonagem(req, res) {
+  async updateCollection(req, res) {
     try {
       const { id } = req.params;
       const {
-        title,
+        name,
         description,
-        episodes,
         releaseYear,
-        studio,
-        genres,
-        rating,
-        imageUrl,
       } = req.body;
 
       // Atualizar o personagem
-      const updatedPersonagem = await PersonagemModel.update(
+      const updatedCollection = await CollectionModel.update(
         id,
-        title,
+        name,
         description,
-        episodes,
         releaseYear,
-        studio,
-        genres,
-        rating,
-        imageUrl
       );
 
-      if (!updatedPersonagem) {
-        return res.status(404).json({ error: "Personagem não encontrado" });
+      if (!updatedCollection) {
+        return res.status(404).json({ error: "Coleção não encontrada" });
       }
 
-      res.json(updatedPersonagem);
+      res.json(updatedCollection);
     } catch (error) {
-      console.error("Erro ao atualizar personagem:", error);
-      res.status(500).json({ error: "Erro ao atualizar personagem" });
+      console.error("Erro ao atualizar coleção:", error);
+      res.status(500).json({ error: "Erro ao atualizar coleção." });
     }
   }
 

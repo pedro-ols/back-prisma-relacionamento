@@ -14,7 +14,7 @@ collectionRouter.get("/:id", CollectionController.getCollectionById);
 collectionRouter.post("/", CollectionController.createCollection);
 
 // PUT /personagens/:id - Atualizar um Personagem
-// personagensRouter.put("/:id", PersonagemController.updatePersonagem);
+collectionRouter.put("/:id", CollectionController.updateCollection);
 
 // DELETE /personagens/:id - Remover um Personagem
 // personagensRouter.delete("/:id", PersonagemController.deletePersonagem);

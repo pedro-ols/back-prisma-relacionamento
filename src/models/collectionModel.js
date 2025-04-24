@@ -40,56 +40,36 @@ class CollectionModel {
   // Atualizar um personagem
   async update(
     id,
-    title,
+    name,
     description,
-    episodes,
-    releaseYear,
-    studio,
-    genres,
-    rating,
-    imageUrl
+    releaseYear
   ) {
-    const personagem = await this.findById(id);
+    const collection = await this.findById(id);
 
-    if (!personagem) {
+    if (!collection) {
       return null;
     }
 
     // Atualize o personagem existente com os novos dados
     const data = {};
-    if (title !== undefined) {
-      data.title = title;
+    if (name !== undefined) {
+      data.name = name;
     }
     if (description !== undefined) {
       data.description = description;
     }
-    if (episodes !== undefined) {
-      data.episodes = episodes;
-    }
     if (releaseYear !== undefined) {
       data.releaseYear = releaseYear;
     }
-    if (studio !== undefined) {
-      data.studio = studio;
-    }
-    if (genres !== undefined) {
-      data.genres = genres;
-    }
-    if (rating !== undefined) {
-      data.rating = rating;
-    }
-    if (imageUrl !== undefined) {
-      data.imageUrl = imageUrl;
-    }
 
-    const personagemUpdated = await prisma.personagem.update({
+    const updatedCollection = await prisma.collection.update({
       where: {
         id: Number(id),
       },
       data,
     });
 
-    return personagemUpdated;
+    return updatedCollection;
   }
 
   // Remover um personagem
