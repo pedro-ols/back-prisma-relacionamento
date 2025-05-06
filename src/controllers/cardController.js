@@ -3,6 +3,11 @@ import CardModel from "../models/cardModel.js";
 class CardController {
   // GET /cartas
   async getAllCards(req, res) {
+    const pagina = req.query.page || 1; // Padrão para a página 1
+    console.log("Página:", pagina);
+
+    const limite = req.query.limit || 10; // Padrão para o limite de 10 itens por página
+    console.log("Limite:", limite);
     try {
       const cards = await CardModel.findAll();
       res.json(cards);
