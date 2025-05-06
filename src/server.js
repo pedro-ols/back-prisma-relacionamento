@@ -15,11 +15,6 @@ app.use(express.json()); // Parse de JSON
 
 app.use("/", routes)
 
-// Rota base para verificar se o servidor está rodando
-app.get("/", (req, res) => {
-  res.json({ message: "API de Coleção de Animes funcionando!" });
-});
-
 // Iniciar o servidor
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);

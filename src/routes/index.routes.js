@@ -11,12 +11,11 @@ import authMiddleware from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 router.use("/auth", authRouter);
-
-router.use(authMiddleware);
-
-router.use("/animes", animesRouter);
-router.use("/personagens", personagemRouter);
 router.use("/colecoes", collectionRouter);
 router.use("/cartas", cardRouter);
+
+router.use(authMiddleware)
+router.use("/animes", animesRouter);
+router.use("/personagens", personagemRouter);
 
 export default router;
