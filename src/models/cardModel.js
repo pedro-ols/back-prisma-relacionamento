@@ -4,16 +4,29 @@ class CardModel {
   // Obter todas as cartas
   async findAll() {
     const cards = await prisma.card.findMany({
+      // where: {
+      //   rarity: "Ultra Rare",
+      // },
+      // where: {
+      //   attackPoints: {
+      //     lte: 8000,
+      //   }
+      // },
+      where: {
+        attackPoints: {
+          gte: 8000,
+        }
+      },
       orderBy: {
         createdAt: "desc",
       },
       include: {
         collection: {
-            select: {
-                name: true,
-                description: true,
-                releaseYear: true,
-            },
+          select: {
+            name: true,
+            description: true,
+            releaseYear: true,
+          },
         },
       },
     });
@@ -29,17 +42,17 @@ class CardModel {
       },
       include: {
         collection: {
-            select: {
-                name: true,
-                description: true,
-                releaseYear: true,
-            },
+          select: {
+            name: true,
+            description: true,
+            releaseYear: true,
+          },
         },
       },
     });
 
     return card;
-    
+
   }
 
   // Criar um novo personagem
