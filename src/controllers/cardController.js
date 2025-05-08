@@ -9,9 +9,11 @@ class CardController {
 
     const ataque = req.query.ataque;
 
+    const nome = req.query.nome;
+
     const limite = req.query.limite || 10;
     try {
-      const cards = await CardModel.findAll(raridade, ataque, pagina, limite);
+      const cards = await CardModel.findAll(raridade, ataque, pagina, limite, nome);
       res.json(cards);
     } catch (error) {
       console.error("Erro ao buscar as cartas:", error);
