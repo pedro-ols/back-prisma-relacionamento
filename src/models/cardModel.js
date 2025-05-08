@@ -11,7 +11,7 @@ class CardModel {
     }
 
     const skip = (Number(pagina) - 1) * Number(limite)
-    
+
     const where = {}
 
     if (raridade){
@@ -21,9 +21,9 @@ class CardModel {
       where.attackPoints = Number(ataque)
     };
     const cards = await prisma.card.findMany({
+      skip,
+      take: Number(limite),
       where,
-      skip: 0,
-      take: 2,
       orderBy: {
         createdAt: "desc",
       },
@@ -38,7 +38,9 @@ class CardModel {
       },
     });
 
-    return cards;
+    const totalGeral = await prisma.card.count({ where });
+    const totalExibidos = cards.length
+    return { totalExibidos, totalGeral, cards, };
   }
 
   // Obter uma carta pelo ID

@@ -9,7 +9,7 @@ class CardController {
 
     const ataque = req.query.ataque;
 
-    const limite = req.query.limite
+    const limite = req.query.limite || 10;
     try {
       const cards = await CardModel.findAll(raridade, ataque, pagina, limite);
       res.json(cards);
